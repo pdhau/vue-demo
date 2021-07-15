@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <!-- Declarative Rendering -->
+    <div id="app">
+        {{ message }}
+    </div>
+    <script>
+        var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'Hello Vue!'
+                }
+            })
+    </script>
+
+    <div id="app-2">
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds
+            to see my dynamically bound title!
+        </span>
+    </div>
+    <script>
+        var app2 = new Vue({
+                el: '#app-2',
+                data: {
+                    message: 'You loaded this page on ' + new Date().toLocaleString()
+                }
+            })
+    </script>
+
+    <!-- Conditionals and Loops -->
+    <div id="app-3">
+        <span v-if="seen">Now you see me</span>
+    </div>
+    <script>
+        var app3 = new Vue({
+                el: "#app-3",
+                data: {
+                    seen: true
+                }
+            })
+    </script>
+
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+    <script>
+        var app4 = new Vue({
+                el: '#app-4',
+                data: {
+                    todos: [
+                        { text: 'text 1' },
+                        { text: 'text 2' },
+                        { text: 'text 3' },
+                    ]
+                }
+            })
+    </script>
+
+    <!-- Handling User Input -->
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+    </div>
+    <script>
+        var app5 = new Vue({
+                el: '#app-5',
+                data: {
+                    message: 'Hello Vue.js!'
+                },
+                methods: {
+                    reverseMessage: function () {
+                        this.message = this.message.split('').reverse().join('')
+                    }
+                }
+            })
+    </script>
+
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model="message">
+    </div>
+    <script>
+        var app6 = new Vue({
+                el: '#app-6',
+                data: {
+                    message: 'Hello Vue!'
+                }
+            })
+    </script>
+
+    <!-- Composing with Components -->
+    <div id="app-70">
+        <ol>
+            <!-- Create an instance of the todo-item component -->
+            <todo-item></todo-item>
+        </ol>
+    </div>
+    <script>
+        // Define a new component called todo-item
+        Vue.component('todo-item', {
+                template: '<li>This is a todo</li>'
+            })
+        var app = new Vue({
+                el: '#app-70'
+            })
+    </script>
+
+    <div id="app-71">
+        <ol>
+            <!-- Create an instance of the todo-item component -->
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+            ></todo-item>
+        </ol>
+    </div>
+    <script>
+        // Define a new component called todo-item
+        Vue.component('todo-item', {
+                props: ['todo', 'key'],
+                template: '<li>{{ key }} - {{ todo.text }}</li>'
+            })
+        var app = new Vue({
+                el: '#app-71',
+                data: {
+                    groceryList: [
+                        { id: 0, text: 'Vegetables' },
+                        { id: 1, text: 'Cheese' },
+                        { id: 2, text: 'Whatever else humans are supposed to eat' }
+                    ]
+                }
+            })
+    </script>
+</body>
+
+</html>
